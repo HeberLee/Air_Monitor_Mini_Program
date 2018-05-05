@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+    <view class="username">
+      用户名：
+      <view class="username-input">
+        <input type="text" bindinput="userNameInput" />
+      </view>
+
+    </view>
+    <view class="password">
+      密码：
+      <view class="password-input">
+        <input type="text" bindinput="userPasswordInput" password="true" />
+      </view>
+
+    </view>
+    <view class="botton">
+      <button type="primary" bindtap="login">登录</button>
+      <button type="warn" bindtap="register">还没有账号？注册</button>
+    </view>
+
+  </view>
+</view>

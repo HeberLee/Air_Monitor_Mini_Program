@@ -1,0 +1,28 @@
+<view class="mine-wrapper">
+  <view class="avatar-wrapper">
+    <view>
+      <view class="avatar">
+        <image style="border-radius:50%;" src="/images/avatar/basketball.png"></image>
+      </view>
+      <view class="text">
+        <text wx:if="{{userinfo.nickName}}">{{userinfo.nickName}}</text>
+        <text wx:else bindtap="toLogin">注册 / 登录</text>
+      </view>
+      <view class="text">
+        <text>Hello,Heber</text>
+      </view>
+    </view>
+  </view>
+  <view class='cut-off-bar'>
+  </view>
+  <view class='menu-container'>
+    <view>
+      <image class='menu-image' src="/images/tab/email.png"></image>
+    </view>
+    <text>邮箱推送</text>
+    <view class='switch'>
+      <switch/>
+    </view>
+
+  </view>
+</view>

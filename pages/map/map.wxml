@@ -1,0 +1,1 @@
+<map longitude="{{map.lng}}" latitude="{{map.lat}}" markers="{{map.markers}}"   scale="13" style="width: 100%; height: 600px;" wx:if="{{map.hasMarkers}}"></map>

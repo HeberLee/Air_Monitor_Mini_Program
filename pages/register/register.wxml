@@ -1,0 +1,34 @@
+<view class="container">
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+    <view class="username">
+      用户名：
+      <view class="username-input">
+        <input type="text" bindblur="usernameInput" />
+      </view>
+
+    </view>
+    <view class="password">
+      密码：
+      <view class="password-input">
+        <input type="text" bindblur="passwordInput" password="true" />
+      </view>
+    </view>
+        <view class="re-password">
+      再次输入密码：
+      <view class="password-input">
+        <input type="text" bindblur="rePasswordInput" password="true" />
+      </view>
+    </view>
+        <view class="email">
+      邮箱：
+      <view class="email-input">
+        <input type="text" bindblur="emailInput" />
+      </view>
+    </view>
+    <view class="botton">
+      <button type="primary" bindtap="register">注册</button>
+    </view>
+
+  </view>
+</view>
