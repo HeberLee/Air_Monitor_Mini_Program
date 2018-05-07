@@ -1,240 +1,181 @@
 import * as echarts from '../../ec-canvas/echarts';
-
+let chart = null;
 const app = getApp();
 
-function test1(){
-  console.log('test1');
-  var cv = initChart();
-  test3();
-}
-
-function initChart2() {
-  console.log('init2');
-  initChart;
-}
-
-function test3(){
-  console.log('test3');
-}
-function initChart(canvas, width, height, date = '2018-3-4') {
-  console.log('1');
-  const chart = echarts.init(canvas, null, {
+function initChart(canvas, width, height) {
+  chart = echarts.init(canvas, null, {
     width: width,
     height: height
   });
-  console.log('2');
   canvas.setChart(chart);
-  console.log('34');
-  wx.request({
 
-    url: 'http://127.0.0.1/study/Air_Monitor/public/admin/chart/chart_weixin',
-    data:
-    {
-      date: date
+  var option = {
+    color: ['#37a2da', '#32c5e9', '#67e0e3'],
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+      }
     },
-
-    method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    header: {
-      'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    legend: {
+      data: ['热度', '正面', '负面']
     },
-
-    success: function (res) {
-      var data = res.data;
-      console.log(data);
-      var option = {
-        title: {
-          text: 'Beijing AQI'
-        },
-        tooltip: {
-          trigger: 'axis'
-        },
-        xAxis: {
-          data: data.map(function (item) {
-            return item[0];
-          })
-        },
-        yAxis: {
-          splitLine: {
-            show: false
-          }
-        },
-        toolbox: {
-          left: 'center',
-          feature: {
-            dataZoom: {
-              yAxisIndex: 'none'
-            },
-            restore: {},
-            saveAsImage: {}
-          }
-        },
-
-        visualMap: {
-          top: 10,
-          right: 10,
-          pieces: [{
-            gt: 0,
-            lte: 20,
-            color: '#096'
-          }, {
-            gt: 20,
-            lte: 40,
-            color: '#ffde33'
-          }, {
-            gt: 40,
-            lte: 60,
-            color: '#ff9933'
-          }, {
-            gt: 60,
-            lte: 80,
-            color: '#cc0033'
-          }, {
-            gt: 80,
-            lte: 100,
-            color: '#660099'
-          }, {
-            gt: 100,
-            color: '#7e0023'
-          }],
-          outOfRange: {
+    grid: {
+      left: 20,
+      right: 20,
+      bottom: 15,
+      top: 40,
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'value',
+        axisLine: {
+          lineStyle: {
             color: '#999'
           }
         },
-        series: {
-          name: 'Beijing AQI',
-          type: 'line',
-          data: data.map(function (item) {
-            return item[1];
-          }),
-          markLine: {
-            silent: true,
-            data: [{
-              yAxis: 20
-            }, {
-              yAxis: 40
-            }, {
-              yAxis: 60
-            }, {
-              yAxis: 80
-            }, {
-              yAxis: 100
-            }]
-          }
+        axisLabel: {
+          color: '#666'
         }
-      };
-
-      chart.setOption(option);
-      return chart;
-    }
-
-  })
-
-}
-
-function getData() {
-
-  wx.request({
-    
-    url: 'http://127.0.0.1/study/Air_Monitor/public/admin/chart/chart_weixin',
-    data:
-    {
-
-    },
-
-    method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    header: {
-      'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-    },
-
-    success: function (res) {
-      var data = res.data;
-      // console.log(data);
-      return data;
-    }
-
-  })
-}
-
-function createOption(){
-  var data = getData();
-  console.log(data);
-}
-function getBarOption() {
-
-  var option = {
-    backgroundColor: "#fff",
-    color: ["#37A2DA", "#67E0E3", "#9FE6B8"],
-
-    tooltip: {
-      trigger: 'axis'
-    },
-    legend: {
-
-      data: ['A商品', 'B商品', 'C商品']
-    },
-    grid: {
-      containLabel: true
-    },
-
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-    },
-    yAxis: {
-      x: 'center',
-      type: 'value'
-    },
-    series: [{
-      name: 'A商品',
-      type: 'line',
-      smooth: true,
-      data: [18, 36, 65, 30, 78, 40, 33]
-    }, {
-      name: 'B商品',
-      type: 'line',
-      smooth: true,
-      data: [12, 50, 51, 35, 70, 30, 20]
-    }, {
-      name: 'C商品',
-      type: 'line',
-      smooth: true,
-      data: [10, 30, 31, 50, 40, 20, 10]
-    }]
+      }
+    ],
+    yAxis: [
+      {
+        type: 'category',
+        axisTick: { show: false },
+        data: ['汽车之家', '今日头条', '百度贴吧', '一点资讯', '微信', '微博', '知乎'],
+        axisLine: {
+          lineStyle: {
+            color: '#999'
+          }
+        },
+        axisLabel: {
+          color: '#666'
+        }
+      }
+    ],
+    series: [
+      {
+        name: '热度',
+        type: 'bar',
+        label: {
+          normal: {
+            show: true,
+            position: 'inside'
+          }
+        },
+        data: [300, 270, 340, 344, 300, 320, 310],
+        itemStyle: {
+          // emphasis: {
+          //   color: '#37a2da'
+          // }
+        }
+      },
+      {
+        name: '正面',
+        type: 'bar',
+        stack: '总量',
+        label: {
+          normal: {
+            show: true
+          }
+        },
+        data: [120, 102, 141, 174, 190, 250, 220],
+        itemStyle: {
+          // emphasis: {
+          //   color: '#32c5e9'
+          // }
+        }
+      },
+      {
+        name: '负面',
+        type: 'bar',
+        stack: '总量',
+        label: {
+          normal: {
+            show: true,
+            position: 'left'
+          }
+        },
+        data: [-20, -32, -21, -34, -90, -130, -110],
+        itemStyle: {
+          // emphasis: {
+          //   color: '#67e0e3'
+          // }
+        }
+      }
+    ]
   };
-  return option;
+
+  chart.setOption(option);
+  return chart;
 }
+
 Page({
-  onShareAppMessage: function (res) {
-    return {
-      title: 'ECharts 可以在微信小程序中使用啦！',
-      path: '/pages/index/index',
-      success: function () { },
-      fail: function () { }
-    }
-  },
-  
+
   data: {
-    date: '2016-09-01',
+    machines: '',
+    index: 0,
     ec: {
       onInit: initChart
     },
+
   },
-  initChart1:function(canvas, width, height, date = '2018-3-4') {
-    console.log('1');
-    const chart = echarts.init(canvas, null, {
-      width: width,
-      height: height
+
+
+
+  onLoad: function () {
+    wx.setStorageSync('machine', '泉州_鲤城区_1');
+    var that = this;
+    wx.request({
+      url: 'http://127.0.0.1/study/Air_Monitor/public/api/weixin/machine_names',
+      method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      header: {
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+
+      success: function (res) {
+        var data = res.data;
+        console.log(data);
+        that.setData({
+          machines: data
+        })
+
+      }
+    })
+  },
+  getChart: function () {
+    var that = this;
+    wx.getStorage({
+      key: 'machine',
+      success: function (res) {
+        console.log(res.data)
+        if (res.data) {
+          that.setData({
+            machine: res.data
+          })
+        }
+      }
     });
-    console.log('2');
-    canvas.setChart(chart);
-    console.log('34');
+    wx.getStorage({
+      key: 'date',
+      success: function (res) {
+        console.log(res.data)
+        if (res.data) {
+          that.setData({
+            date: res.data
+          })
+        }
+      }
+    });
     wx.request({
 
-      url: 'http://127.0.0.1/study/Air_Monitor/public/admin/chart/chart_weixin',
+      url: 'http://127.0.0.1/study/Air_Monitor/public/api/Weixin/chart',
       data:
       {
-        date: date
+        name: this.data.machine,
+        date:this.data.date
       },
 
       method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
@@ -326,16 +267,28 @@ Page({
             }
           }
         };
-
+        // that.setData({
+        //   option:option
+        // })
+        chart.clear();
         chart.setOption(option);
-        return chart;
       }
 
     })
-
   },
-  onLoad: function(){
+  bindMachineChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value);
+    wx.setStorageSync('machine', this.data.machines[e.detail.value]);
+    this.setData({
+      index: e.detail.value
+    })
+  },
 
-
-  }
+  bindDateChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    wx.setStorageSync('date', e.detail.value);
+    this.setData({
+      date: e.detail.value
+    })
+  },
 });

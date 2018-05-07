@@ -1,5 +1,14 @@
 /**index.wxss**/
+.container{
+  align-items: center;
+  margin-top: 0rpx;
+}
+.section{
+  display: flex;
+  flex-direction: row;
+}
+
 ec-canvas {
   width: 100%;
-  height: 90%;
+  height: 80%;
 }

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    motto: '欢迎登录WXapp',
+    motto: 'Air_Monitor',
     username: '',
     password: '',
     email: '',
@@ -29,8 +29,12 @@ Page({
       password: e.detail.value
     })
   },
+  //检查两次是否一致，不一致弹窗提示并将check设置为0.
   rePasswordInput: function (e) {
     if(e.detail.value != this.data.password){
+      this.setData({
+        check: 0
+      })
       wx.showToast({
         title: '前后密码不一致',
         icon: 'none',

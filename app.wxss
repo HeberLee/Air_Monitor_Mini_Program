@@ -6,7 +6,7 @@ text{
 /**app.wxss**/
 .chart-container {
   position: absolute;
-  top: 200rpx;
+  top: 300rpx;
   bottom: 0;
   left: 0;
   right: 0;
